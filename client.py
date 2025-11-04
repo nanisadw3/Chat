@@ -5,7 +5,7 @@ import customtkinter as ctk
 import socket
 import threading
 import time
-import ssl
+
 
 class Ventana:
 
@@ -92,19 +92,8 @@ def cliente():
     host = 'localhost'
     port = 12345
 
-
-
-    #
-    context = ssl.create_default_context()
-    context.check_hostname = False
-    context.verify_mode = ssl.CERT_NONE
-    #
-
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as cl:
 
-        #
-        cl = context.wrap_socket(cl, server_hostname=host)
-        #
         cl.connect((host, port))
         username = input("Ingresa tu usuario -> ")
         cl.sendall(username.encode())

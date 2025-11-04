@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import socket
-import ssl 
 import threading
 
 def hilos_clientes(cl, clientes, username):
@@ -53,11 +52,6 @@ def servidor():
         sv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # Para no esperar timeweit
         sv.bind((host, port))
 
-         # Configura SSL con contexto moderno
-        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        context.load_cert_chain(certfile="server-cert.pem", keyfile="server-key.key")
-        #
-
         sv.listen()
         print('[+] En escucha ...')
 
@@ -67,9 +61,6 @@ def servidor():
         while True:
 
             cl,addr = sv.accept() # aceptanos la coneccion entrante
-            #
-            cl = context.wrap_socket(cl, server_side=True)  # ← aquí se cifra la conexión
-            #
             clientes.append(cl)
             hilo_c = threading.Thread(target=hilos_clientes, args=(cl,clientes,username))
             hilo_c.daemon = True
