@@ -1,0 +1,5 @@
+openssl genpkey -algorithm RSA -out server-key.key -aes256
+openssl req -new -key server-key.key -out server.csr
+openssl x509 -req -days 365 -in server.csr -signkey server-key.key -out server-cert.pem
+openssl rsa -in server-key.key -out server-key.key
+
